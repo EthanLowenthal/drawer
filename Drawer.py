@@ -20,16 +20,18 @@ def move_rect():
     global y_pos
 
     if(pygame.key.get_pressed()[pygame.K_w]):
-                y_pos += 3
+         y_pos += 3
     if(pygame.key.get_pressed()[pygame.K_s]):
-                y_pos -= 3
+         y_pos -= 3
     if(pygame.key.get_pressed()[pygame.K_d]):
-                x_pos += 3
+         x_pos += 3
     if(pygame.key.get_pressed()[pygame.K_a]):
-                x_pos -= 3
+         x_pos -= 3
+    borders()
 
-
-
+def borders():
+    if x_pos > 790:
+         x_pos += 3
 
 def main():
     while not done:
