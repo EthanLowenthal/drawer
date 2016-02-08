@@ -34,7 +34,6 @@ def move_rect():
 def main():
     while not done:
         draw_rect()
-        pygame.display.update()
         move_rect()
 
 screen.fill(colors["White"])
