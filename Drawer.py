@@ -11,29 +11,31 @@ y_pos = 60
 color = colors["Red"]
 
 
+
 def draw_rect():
     pygame.draw.rect(screen, color, (x_pos,y_pos,size_x,size_y))
 
 def move_rect():
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d or pygame.K_RIGHT:
-                x_pos += 60
+    global x_pos
+    global y_pos
+
+    if(pygame.key.get_pressed()[pygame.K_w]):
+                y_pos += 3
+    if(pygame.key.get_pressed()[pygame.K_s]):
+                y_pos -= 3
+    if(pygame.key.get_pressed()[pygame.K_d]):
+                x_pos += 3
+    if(pygame.key.get_pressed()[pygame.K_a]):
+                x_pos -= 3
 
 
-def check_for_quit():
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN and  event.key == pygame.K_ESCAPE or pygame.QUIT:
-                done = True
-                pygame.quit()
 
 
 def main():
     while not done:
-        move_rect()
         draw_rect()
-        check_for_quit()
         pygame.display.update()
+        move_rect()
 
 screen.fill(colors["White"])
 
