@@ -1,5 +1,6 @@
 import pygame
 from Colors import colors
+
 screen = pygame.display.set_mode((800,600))
 pygame.init()
 
@@ -9,6 +10,9 @@ size_y = 60
 x_pos = 60
 y_pos = 60
 color = colors["Red"]
+
+
+screen.fill(colors["White"])
 
 
 
@@ -31,14 +35,20 @@ def move_rect():
 
 def borders():
     if x_pos > 790:
+         x_pos -= 3
+    if x_pos < 10:
          x_pos += 3
+    if y_pos > 590:
+         y_pos -= 3
+    if y_pos < 10:
+         y_pos += 3
 
 def main():
     while not done:
         draw_rect()
         move_rect()
 
-screen.fill(colors["White"])
+
 
 while not done:
     main()
