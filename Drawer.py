@@ -6,7 +6,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 pygame.mouse.set_visible(0)
-pygame.key.set_repeat(10, 10)
+pygame.key.set_repeat(50, 50)
 
 done = False
 size_x = 60
@@ -37,7 +37,10 @@ def borders():
     if y_pos < 10:
          y_pos += 3
 
-def move_rect(x_pos,y_pos):
+def move_rect():
+    global x_pos
+    global y_pos
+    global done
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
             x_pos -= 3
@@ -51,6 +54,9 @@ def move_rect(x_pos,y_pos):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
             y_pos += 3
             print(y_pos)
+        if event.type == pygame.QUIT:
+            done = True
+            pygame.QUIT()
 
 
 
@@ -66,7 +72,7 @@ def check_for_quit():
 def main():
     while not done:
         check_for_quit()
-        move_rect(x_pos,y_pos)
+        move_rect()
         borders()
         draw_rect()
         pygame.display.update()
