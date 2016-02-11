@@ -4,9 +4,6 @@ from pygame.locals import *
 
 screen = pygame.display.set_mode((800,600))
 pygame.init()
-
-clock = pygame.time.Clock()
-pygame.mouse.set_visible(0)
 pygame.key.set_repeat(50, 50)
 
 done = False
