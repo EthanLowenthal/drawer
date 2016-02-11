@@ -15,6 +15,13 @@ size_y = 60
 x_pos = 60
 y_pos = 60
 color = colors["Red"]
+brush = pygame.draw.rect(screen, color, (x_pos,y_pos,size_x,size_y))
+
+class Brush(pygame.sprite.Sprite):
+
+        def __init__(self, display, x_axis, y_axis, w, h):
+                self.screen = display
+                self.rect = pygame.Rect(x_axis,y_axis,w,h)
 
 
 screen.fill(colors["White"])
@@ -22,15 +29,18 @@ screen.fill(colors["White"])
 pygame.display.flip()
 
 def draw_rect():
-    pygame.draw.rect(screen, color, (x_pos,y_pos,size_x,size_y))
-
+    global brush
+    brush.normalize()
+    brushsprite = pygame.sprite.RenderPlain(brush)
+    screen.blit(background, ball.rect, ball.rect)
+    brushsprite.draw(screen)
 
 def borders():
     global x_pos
     global y_pos
 
     if x_pos > 790:
-         x_pos -= 3
+         x_pos -= size_x + 13
     if x_pos < 10:
          x_pos += 3
     if y_pos > 590:
@@ -42,8 +52,11 @@ def borders():
 def move_brush():
     global x_pos
     global y_pos
+    global size_x
+    global size_y
+    global brush
+    press = pygame.key.get_pressed()
 
-    press=pygame.key.get_pressed()
     if press[K_w] == 1:
         y_pos -= 3
     if press[K_a] == 1:
@@ -52,6 +65,10 @@ def move_brush():
         y_pos += 3
     if press[K_d] == 1:
         x_pos += 3
+    if press[K_MINUS] or press[K_KP_MINUS] == 1:
+        brush.inflate(-3,-3)
+    if press[K_EQUALS] or press[K_PLUS] or press[K_KP_PLUS] == 1:
+        brush.inflate(3,3)
 
 
 def check_for_quit():
