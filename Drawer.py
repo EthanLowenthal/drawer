@@ -1,5 +1,6 @@
 import pygame
 from Colors import colors
+from pygame.locals import *
 
 screen = pygame.display.set_mode((800,600))
 pygame.init()
@@ -37,28 +38,20 @@ def borders():
     if y_pos < 10:
          y_pos += 3
 
-def move_rect():
+
+def move_brush():
     global x_pos
     global y_pos
-    global done
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-            x_pos -= 3
-            print(x_pos)
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
-            x_pos += 3
-            print(x_pos)
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-            y_pos -= 3
-            print(y_pos)
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-            y_pos += 3
-            print(y_pos)
-        if event.type == pygame.QUIT:
-            done = True
-            pygame.QUIT()
 
-
+    press=pygame.key.get_pressed()
+    if press[K_w] == 1:
+        y_pos -= 3
+    if press[K_a] == 1:
+        x_pos -= 3
+    if press[K_s] == 1:
+        y_pos += 3
+    if press[K_d] == 1:
+        x_pos += 3
 
 
 def check_for_quit():
@@ -72,7 +65,7 @@ def check_for_quit():
 def main():
     while not done:
         check_for_quit()
-        move_rect()
+        move_brush()
         borders()
         draw_rect()
         pygame.display.update()
