@@ -1,5 +1,5 @@
 import pygame
-from Colors import colors
+from Colors import *
 from pygame.locals import *
 
 screen = pygame.display.set_mode((800,600))
@@ -14,26 +14,48 @@ size_x = 60
 size_y = 60
 x_pos = 60
 y_pos = 60
-color = colors["Red"]
-brush = pygame.draw.rect(screen, color, (x_pos,y_pos,size_x,size_y))
+color = colors[5]
 
-class Brush(pygame.sprite.Sprite):
+class Rectangle:
 
-        def __init__(self, display, x_axis, y_axis, w, h):
-                self.screen = display
-                self.rect = pygame.Rect(x_axis,y_axis,w,h)
+    def __init__(self, x, y, width, height, screen, color):
 
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.color = color
 
-screen.fill(colors["White"])
+    def draw(self):
+
+        pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.height, self.width])
+
+    def move(self, change_x, change_y):
+
+        self.x += change_x
+        self.y += change_y
+
+    def borders(self):
+
+        if self.x > pygame.Surface.get_width() - self.width - 10:
+             self.x +=
+        if self.x > self.width + 10:
+             self.x -= 3
+        if self.y < pygame.Surface.get_height() - self.widt - 10:
+             self.y += 3
+        if self.y > 70:
+             self.y -= 3
+
+Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, color)
+
+screen.fill(colors[3])
 
 pygame.display.flip()
 
 def draw_rect():
-    global brush
-    brush.normalize()
-    brushsprite = pygame.sprite.RenderPlain(brush)
-    screen.blit(background, ball.rect, ball.rect)
-    brushsprite.draw(screen)
+    Brush.draw()
+
 
 def borders():
     global x_pos
@@ -54,17 +76,17 @@ def move_brush():
     global y_pos
     global size_x
     global size_y
-    global brush
+
     press = pygame.key.get_pressed()
 
     if press[K_w] == 1:
-        y_pos -= 3
+        Brush.move(0,-3)
     if press[K_a] == 1:
-        x_pos -= 3
+        Brush.move(-3,0)
     if press[K_s] == 1:
-        y_pos += 3
+        Brush.move(0,3)
     if press[K_d] == 1:
-        x_pos += 3
+        Brush.move(3,0)
     if press[K_MINUS] or press[K_KP_MINUS] == 1:
         brush.inflate(-3,-3)
     if press[K_EQUALS] or press[K_PLUS] or press[K_KP_PLUS] == 1:
