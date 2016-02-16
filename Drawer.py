@@ -14,7 +14,8 @@ size_x = 60
 size_y = 60
 x_pos = 60
 y_pos = 60
-color = colors[5]
+c = 5
+shade = colors_names[c]
 
 class Rectangle:
 
@@ -37,8 +38,6 @@ class Rectangle:
 
         self.x += change_x
         self.y += change_y
-        print(self.x)
-        print(self.y)
 
 
     def borders(self):
@@ -51,15 +50,23 @@ class Rectangle:
              self.y += 3
         if self.y > screen.get_height() - self.height - 10:
              self.y -= 3
+        if self.width < 2:
+            self.width = 2
+            self.height = 2
+        if self.width > 120:
+            self.width = 120
+            self.height = 120
+
+
 
     def size(self, change_x, change_y):
         self.height += change_x
         self.width += change_y
 
 
-Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, color)
+Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, shade)
 
-screen.fill(colors[3])
+screen.fill(colors_names[3])
 
 pygame.display.flip()
 
@@ -67,20 +74,13 @@ def draw_rect():
     Brush.borders()
     Brush.draw()
 
-
-def borders():
-    global x_pos
-    global y_pos
-
-    if x_pos > 790:
-         x_pos -= size_x + 13
-    if x_pos < 10:
-         x_pos += 3
-    if y_pos > 590:
-         y_pos -= 3
-    if y_pos < 10:
-         y_pos += 3
-
+def change_colors():
+    global shade
+    global c
+    c += 2
+    c = a
+    shade = colors_names[c]
+    print(c - 1)
 
 def move_brush():
 
@@ -95,9 +95,11 @@ def move_brush():
     if press[K_d] == 1:
         Brush.move(3,0)
     if press[K_MINUS] or press[K_KP_MINUS] == 1:
-        brush.inflate(-3,-3)
+        Brush.size(-3,-3)
     if press[K_EQUALS] or press[K_PLUS] or press[K_KP_PLUS] == 1:
-        brush.inflate(3,3)
+        Brush.size(3,3)
+    if press[K_SPACE] == 1:
+        change_colors()
 
 
 def check_for_quit():
@@ -112,7 +114,6 @@ def main():
     while not done:
         check_for_quit()
         move_brush()
-        borders()
         draw_rect()
         pygame.display.update()
 
