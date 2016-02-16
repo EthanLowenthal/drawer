@@ -27,25 +27,35 @@ class Rectangle:
         self.screen = screen
         self.color = color
 
+
     def draw(self):
 
         pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.height, self.width])
+
 
     def move(self, change_x, change_y):
 
         self.x += change_x
         self.y += change_y
+        print(self.x)
+        print(self.y)
+
 
     def borders(self):
 
-        if self.x > pygame.Surface.get_width() - self.width - 10:
-             self.x +=
-        if self.x > self.width + 10:
+        if self.x > screen.get_width() - self.width - 10:
              self.x -= 3
-        if self.y < pygame.Surface.get_height() - self.widt - 10:
+        if self.x < 10:
+             self.x += 3
+        if self.y < 10:
              self.y += 3
-        if self.y > 70:
+        if self.y > screen.get_height() - self.height - 10:
              self.y -= 3
+
+    def size(self, change_x, change_y):
+        self.height += change_x
+        self.width += change_y
+
 
 Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, color)
 
@@ -54,6 +64,7 @@ screen.fill(colors[3])
 pygame.display.flip()
 
 def draw_rect():
+    Brush.borders()
     Brush.draw()
 
 
@@ -72,10 +83,6 @@ def borders():
 
 
 def move_brush():
-    global x_pos
-    global y_pos
-    global size_x
-    global size_y
 
     press = pygame.key.get_pressed()
 
