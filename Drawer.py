@@ -1,3 +1,4 @@
+commit test
 import pygame
 from Colors import *
 from pygame.locals import *
@@ -57,16 +58,23 @@ class Rectangle:
             self.width = 120
             self.height = 120
 
-
-
     def size(self, change_x, change_y):
         self.height += change_x
         self.width += change_y
 
+    def change_colors(self):
+        global shade
+        global c
+        c += 2
+        if c > len(colors_names):
+            c = 1
+        self.color = colors_names[c]
 
-Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, shade)
 
-screen.fill(colors_names[3])
+
+Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, colors_names[c])
+
+screen.fill(White)
 
 pygame.display.flip()
 
@@ -74,13 +82,7 @@ def draw_rect():
     Brush.borders()
     Brush.draw()
 
-def change_colors():
-    global shade
-    global c
-    c += 2
-    c = a
-    shade = colors_names[c]
-    print(c - 1)
+
 
 def move_brush():
 
@@ -99,7 +101,7 @@ def move_brush():
     if press[K_EQUALS] or press[K_PLUS] or press[K_KP_PLUS] == 1:
         Brush.size(3,3)
     if press[K_SPACE] == 1:
-        change_colors()
+        Brush.change_colors()
 
 
 def check_for_quit():
@@ -116,6 +118,8 @@ def main():
         move_brush()
         draw_rect()
         pygame.display.update()
+
+
 
 
 while not done:
