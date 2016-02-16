@@ -1,4 +1,3 @@
-commit test
 import pygame
 from Colors import *
 from pygame.locals import *
