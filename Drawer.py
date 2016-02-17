@@ -1,4 +1,5 @@
 import pygame
+import time
 from Colors import *
 from pygame.locals import *
 
@@ -15,7 +16,6 @@ size_y = 60
 x_pos = 60
 y_pos = 60
 c = 5
-shade = colors_names[c]
 
 class Rectangle:
 
@@ -64,10 +64,20 @@ class Rectangle:
     def change_colors(self):
         global shade
         global c
+        time.sleep(0.09)
         c += 2
         if c > len(colors_names):
             c = 1
         self.color = colors_names[c]
+
+class gui:
+
+    def __init__(self, colors):
+        self.colors = colors
+
+
+    def draw_gui(self):
+        pass
 
 
 
