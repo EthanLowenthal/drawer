@@ -3,7 +3,7 @@ from drawer import *
 from colors import *
 from brushes import *
 
-
+pygame.init()
 
 def draw_rect():
     Brush.borders()
