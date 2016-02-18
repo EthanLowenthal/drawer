@@ -32,19 +32,4 @@ colors_names = ("Black", Black,
 "Teal", Teal,
 "Navy", Navy)
 
-colors = (Black,
-White,
-Red,
-Lime, 
-Blue, 
-Yellow,
-Cyan, 
-Magenta,
-Silver,
-Gray, 
-Maroon,
-Olive,
-Green,
-Purple,
-Teal, 
-Navy,)
+colors = (Black, White, Red, Lime, Blue, Yellow, Cyan, Magenta, Silver, Gray, Maroon, Olive, Green, Purple, Teal, Navy)
