@@ -118,17 +118,14 @@ class gui:
         pygame.draw.rect(screen, Yellow, Rect(select_column - 5, select_row - 5, 40, 40))
         pygame.draw.rect(self.screen, colors[c], Rect(select_column, select_row, 30, 30))
 
-        print(select_column, select_row)
         pygame.display.update()
 
         time.sleep(0.09)
 
         if pygame.key.get_pressed()[K_RIGHT] == 1:
 
-
-
-            if screen.get_width() - 160 and select_row == len(colors) * 60 + 160:
-                c = c
+            if c == len(colors):
+                c = len(colors)
 
             elif select_column >= screen.get_width() - 160:
                 select_column = 70
@@ -136,12 +133,11 @@ class gui:
                 c += 1
                 c %= len(colors)
 
+
             else:
                 c += 1
                 c %= len(colors)
                 select_column += 60
-                select_row = 75
-                last_selected = c + 1
 
 
 
@@ -151,10 +147,16 @@ class gui:
 
 
             if select_column <= 70 and select_row == 75:
-                    print('hi')
-                    c = c
+                    c = 0
 
-            elif select_column <= 159:
+
+            elif select_column <= 70 and select_row == 145:
+                select_column = screen.get_width() - 130
+                select_row = 75
+                c -= 1
+                c %= len(colors)
+
+            elif select_column <= 70 and select_row == 75:
                 select_column = 70
                 select_row = 75
                 c -= 1
@@ -164,8 +166,6 @@ class gui:
                 c -= 1
                 c %= len(colors)
                 select_column -= 60
-                select_row = 75
-                last_selected = c + 1
 
 
 
