@@ -18,6 +18,8 @@ y_pos = 60
 c = 5
 row = 75
 column = 10
+gui_on = False
+
 
 screen.fill(White)
 
@@ -68,12 +70,10 @@ class Rectangle:
         self.width += change_y
 
     def change_colors(self):
-        global shade
         global c
         time.sleep(0.1)
         c += 2
-        if c > len(colors_names):
-            c = 1
+        c %= len(colors)
         self.color = colors_names[c]
 
 class gui:
@@ -86,35 +86,84 @@ class gui:
 
 
     def draw(self):
+        global gui_on
+        gui_on = True
+        global press
+        column = 10
+        row = 75
         pygame.draw.rect(self.screen, Black, self.border)
         pygame.draw.rect(self.screen, (238, 255, 238), self.window)
         for i in self.colors:
-            global column
             column += 60
             pygame.draw.rect(self.screen, Black, Rect(column - 5, row - 5, 40, 40))
             pygame.draw.rect(self.screen, i, Rect(column, row, 30, 30))
             if column >= screen.get_width() - 160:
-                global column
-                global row
                 column = 10
                 row += 70
-        global column
-        global row
-        column = 10
-        row = 75
+
+
 
     def select(self):
+        global select_column
+        global select_row
         global c
-        select_column = 70
-        select_row = 75
+        global gui_on
+        global last_selected
+        last_selected = c
+
+        gui.draw()
+
         pygame.draw.rect(screen, Yellow, Rect(select_column - 5, select_row - 5, 40, 40))
-        pygame.draw.rect(self.screen, c, Rect(select_column, select_row, 30, 30))
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == K_RIGHT and select_column >= screen.get_width - 160:
-                    select_column == 70
-                    select_row += 70
-                if event.key == K_RIGHT and select_column
+        pygame.draw.rect(self.screen, colors[c], Rect(select_column, select_row, 30, 30))
+
+        print(select_column, select_row)
+        pygame.display.update()
+
+        time.sleep(0.09)
+
+        if pygame.key.get_pressed()[K_RIGHT] == 1:
+
+
+
+            if screen.get_width() - 160 and select_row == len(colors) * 60 + 160:
+                c = c
+
+            elif select_column >= screen.get_width() - 160:
+                select_column = 70
+                select_row += 70
+                c += 1
+                c %= len(colors)
+
+            else:
+                c += 1
+                c %= len(colors)
+                select_column += 60
+                select_row = 75
+                last_selected = c + 1
+
+
+
+        if pygame.key.get_pressed()[K_LEFT] == 1:
+
+
+
+
+            if select_column <= 70 and select_row == 75:
+                    print('hi')
+                    c = c
+
+            elif select_column <= 159:
+                select_column = 70
+                select_row = 75
+                c -= 1
+                c %= len(colors)
+
+            else:
+                c -= 1
+                c %= len(colors)
+                select_column -= 60
+                select_row = 75
+                last_selected = c + 1
 
 
 
@@ -129,13 +178,12 @@ def draw_rect():
     Brush.borders()
     Brush.draw()
 
-def gui_():
-    global gui
-    gui.draw()
-    gui.select()
-
 
 def move_brush():
+    global gui_on
+    global select_column
+    global select_row
+    global c
 
     press = pygame.key.get_pressed()
 
@@ -154,7 +202,13 @@ def move_brush():
     if press[K_SPACE] == 1:
         Brush.change_colors()
     if press[K_c] == 1:
-        gui_()
+        pygame.mouse.set_visible(1)
+        select_column = 70
+        select_row = 75
+        gui.draw()
+        gui_on = True
+        c = 0
+
 
 
 
@@ -168,10 +222,17 @@ def check_for_quit():
 
 def main():
     while not done:
-        check_for_quit()
         move_brush()
-        draw_rect()
-        pygame.display.update()
+        if gui_on == True:
+            gui.select()
+            check_for_quit()
+            pygame.display.update()
+
+        else:
+            draw_rect()
+            check_for_quit()
+            pygame.display.update()
+
 
 
 
