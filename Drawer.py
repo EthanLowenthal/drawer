@@ -4,6 +4,8 @@ import pygame
 import time
 from Colors import *
 from pygame.locals import *
+from menu import *
+
 
 screen = pygame.display.set_mode((800,600))
 pygame.init()
@@ -20,21 +22,20 @@ y_pos = 60
 c = 5
 row = 75
 column = 10
-gui_on = False
 
 
 screen.fill(White)
 
 class Rectangle:
 
-    def __init__(self, x, y, width, height, screen, color):
+    def __init__(self, x, y, width, height, screen, color_):
 
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.screen = screen
-        self.color = color
+        self.color = color_
 
 
     def draw(self):
@@ -74,105 +75,10 @@ class Rectangle:
     def change_colors(self):
         global c
         time.sleep(0.1)
-        c += 2
         c %= len(colors)
-        self.color = colors_names[c]
+        self.color = colors[c - 1]
 
-class gui:
-
-    def __init__(self, colors, screen):
-        self.colors = colors
-        self.border = Rect(40, 40, screen.get_width() - 80, screen.get_height() - 80)
-        self.window = Rect(50, 50, screen.get_width() - 100, screen.get_height() - 100)
-        self.screen = screen
-
-
-    def draw(self):
-        global gui_on
-        gui_on = True
-        global press
-        column = 10
-        row = 75
-        pygame.draw.rect(self.screen, Black, self.border)
-        pygame.draw.rect(self.screen, (238, 255, 238), self.window)
-        for i in self.colors:
-            column += 60
-            pygame.draw.rect(self.screen, Black, Rect(column - 5, row - 5, 40, 40))
-            pygame.draw.rect(self.screen, i, Rect(column, row, 30, 30))
-            if column >= screen.get_width() - 160:
-                column = 10
-                row += 70
-
-
-
-    def select(self):
-        global select_column
-        global select_row
-        global c
-        global gui_on
-        global last_selected
-        last_selected = c
-
-        gui.draw()
-
-        pygame.draw.rect(screen, Yellow, Rect(select_column - 5, select_row - 5, 40, 40))
-        pygame.draw.rect(self.screen, colors[c], Rect(select_column, select_row, 30, 30))
-
-        pygame.display.update()
-
-        time.sleep(0.09)
-
-        if pygame.key.get_pressed()[K_RIGHT] == 1:
-
-            if c == len(colors):
-                c = len(colors)
-
-            elif select_column >= screen.get_width() - 160:
-                select_column = 70
-                select_row += 70
-                c += 1
-                c %= len(colors)
-
-
-            else:
-                c += 1
-                c %= len(colors)
-                select_column += 60
-
-
-
-        if pygame.key.get_pressed()[K_LEFT] == 1:
-
-
-
-
-            if select_column <= 70 and select_row == 75:
-                    c = 0
-
-
-            elif select_column <= 70 and select_row == 145:
-                select_column = screen.get_width() - 130
-                select_row = 75
-                c -= 1
-                c %= len(colors)
-
-            elif select_column <= 70 and select_row == 75:
-                select_column = 70
-                select_row = 75
-                c -= 1
-                c %= len(colors)
-
-            else:
-                c -= 1
-                c %= len(colors)
-                select_column -= 60
-
-
-
-
-gui = gui(colors, screen)
-
-Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, colors_names[c])
+Brush = Rectangle(x_pos, y_pos, size_y, size_x, screen, colors_alpha[c])
 
 pygame.display.flip()
 
@@ -201,15 +107,13 @@ def move_brush():
         Brush.size(-3,-3)
     if press[K_EQUALS] or press[K_PLUS] or press[K_KP_PLUS] == 1:
         Brush.size(3,3)
-    if press[K_SPACE] == 1:
-        Brush.change_colors()
     if press[K_c] == 1:
         pygame.mouse.set_visible(1)
         select_column = 70
         select_row = 75
-        gui.draw()
-        gui_on = True
-        c = 0
+        menu()
+        Brush.change_colors()
+        pygame.mouse.set_visible(0)
 
 
 
@@ -223,17 +127,12 @@ def check_for_quit():
 
 
 def main():
+    global Brush
     while not done:
         move_brush()
-        if gui_on == True:
-            gui.select()
-            check_for_quit()
-            pygame.display.update()
-
-        else:
-            draw_rect()
-            check_for_quit()
-            pygame.display.update()
+        draw_rect()
+        check_for_quit()
+        pygame.display.update()
 
 
 
