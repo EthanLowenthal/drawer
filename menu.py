@@ -5,10 +5,10 @@ from pyglet.window import key
 
 window = pyglet.window.Window(800,600)
 window.set_caption('Menu')
-window.minimize()
+window.set_visible(False)
 
 def menu():
-    window.maximize()
+    window.set_visible(True)
     def reset_var():
         global column
         global row
@@ -111,7 +111,7 @@ def menu():
             Drawer.column = 10
 
         elif symbol == key.ENTER:
-            window.minimize()
+            window.set_visible(False)
 
     def on_draw():
         Draw_rect((255,255,255,100), 0, 0, window.height, window.width)
