@@ -29,7 +29,6 @@ screen.fill(White)
 class Rectangle:
 
     def __init__(self, x, y, width, height, screen, color_):
-
         self.x = x
         self.y = y
         self.width = width
