@@ -1,4 +1,3 @@
-#PyDraw v. NoIdea.NoIdea
 
 import pygame
 import time
@@ -22,6 +21,7 @@ y_pos = 60
 c = 5
 row = 75
 column = 10
+pause = False
 
 
 screen.fill(White)
@@ -87,10 +87,10 @@ def draw_rect():
 
 
 def move_brush():
-    global gui_on
     global select_column
     global select_row
     global c
+    global pause
 
     press = pygame.key.get_pressed()
 
@@ -113,6 +113,11 @@ def move_brush():
         menu()
         Brush.change_colors()
         pygame.mouse.set_visible(0)
+    if press[K_p] == 1:
+        if pause == True:
+            pause = False
+        else: pause = True
+        time.sleep(0.09)
 
 
 
@@ -126,12 +131,18 @@ def check_for_quit():
 
 
 def main():
-    global Brush
-    while not done:
+    global pause
+    while not pause:
         move_brush()
         draw_rect()
         check_for_quit()
         pygame.display.update()
+    while pause:
+        if press[K_p] == 1:
+            if pause == True:
+                pause = False
+            else: pause = True
+            time.sleep(0.09)
 
 
 

@@ -42,6 +42,11 @@ def menu():
             if  Drawer.column >= window.width - 160:
                  Drawer.column = 10
                  Drawer.row += 70
+    def update():
+        window.flip()
+
+    update()
+
 
     def Draw_rect(_color_, x, y, height, width):
         width = int(round(width))
@@ -111,7 +116,7 @@ def menu():
             Drawer.column = 10
 
         elif symbol == key.ENTER:
-            window.set_visible(False)
+            window.close()
 
     def on_draw():
         Draw_rect((255,255,255,100), 0, 0, window.height, window.width)
