@@ -5,8 +5,10 @@ from Colors import *
 from pygame.locals import *
 from menu import *
 
+width = 800
+height = 600
 
-screen = pygame.display.set_mode((800,600))
+screen = pygame.display.set_mode((width,height))
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -40,8 +42,8 @@ class Rectangle:
     def draw(self):
 
         pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.height, self.width])
-        pygame.draw.rect(self.screen, Black, [screen.get_width() - 60, screen.get_height() - 60, 40, 40])
-        pygame.draw.rect(self.screen, self.color, [screen.get_width() - 55, screen.get_height() - 55, 30, 30])
+        pygame.draw.rect(self.screen, Black, [width - 60, height - 60, 40, 40])
+        pygame.draw.rect(self.screen, self.color, [width - 55, height - 55, 30, 30])
 
 
     def move(self, change_x, change_y):
@@ -52,13 +54,13 @@ class Rectangle:
 
     def borders(self):
 
-        if self.x > screen.get_width() - self.width - 10:
+        if self.x > width - self.width - 10:
              self.x -= 3
         if self.x < 10:
              self.x += 3
         if self.y < 10:
              self.y += 3
-        if self.y > screen.get_height() - self.height - 10:
+        if self.y > height - self.height - 10:
              self.y -= 3
         if self.width < 2:
             self.width = 2
@@ -110,7 +112,7 @@ def move_brush():
         pygame.mouse.set_visible(1)
         select_column = 70
         select_row = 75
-        menu()
+        menu(screen)
         Brush.change_colors()
         pygame.mouse.set_visible(0)
     if press[K_p] == 1:
@@ -148,5 +150,4 @@ def main():
 
 
 
-while not done:
-    main()
+main()
